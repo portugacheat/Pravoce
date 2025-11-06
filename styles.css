@@ -1,0 +1,35 @@
+/* App.css */
+body {
+  margin: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to bottom right, #ffe6e6, #ffb3b3);
+  padding: 20px;
+}
+
+.card {
+  max-width: 700px;
+  background-color: rgba(255, 255, 255, 0.95);
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.titulo {
+  text-align: center;
+  color: #b30000;
+  margin-bottom: 20px;
+}
+
+.texto {
+  line-height: 1.6;
+  color: #330000;
+  white-space: pre-line; /* preserva quebras de linha */
+  font-size: 18px;
+}
