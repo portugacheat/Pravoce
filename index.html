@@ -226,7 +226,7 @@
         <h1>Parabéns.</h1>
         
         <div class="container-texto">
-            <p id="frase-exibida">Carregando surpresa...</p>
+            <p id="frase-exibida">Cruzamos caminhos há apenas três dias, mas datas especiais merecem ser lembradas. Feliz aniversário Clarisse, você tem uma energia linda.</p>
         </div>
 
         <button class="btn-acao" onclick="proximaFrase()">Descobrir nova mensagem</button>
@@ -300,9 +300,8 @@
 
         audio.addEventListener('ended', proximaMusica);
 
-        // Lista de frases com acentuação perfeitamente limpa
-        const frases = [
-            "Cruzamos caminhos há apenas três dias, mas datas especiais merecem ser lembradas. Feliz aniversário Clarisse, você tem uma energia linda.",
+        // Banco de dados com as outras 29 frases fofas para rodar no sorteio
+        const frasesSorteio = [
             "Há quem precise de anos para se fazer notar, e há você, que mudou o tom da minha semana em apenas três conversas. Parabéns!",
             "O tempo é só um detalhe quando a sintonia é verdadeira. Que o dia de hoje seja o início de um ano incrível para você, Clarisse.",
             "Às vezes, os melhores encontros da vida acontecem sem aviso. Que bom ter conhecido você a tempo de celebrar o seu dia.",
@@ -334,24 +333,24 @@
             "A vida fica mais bonita quando encontramos pessoas com o coração tão bom quanto o seu. Um feliz e fofo aniversário!"
         ];
 
+        // Rastreia apenas as frases do sorteio que ela já viu
         function obterFraseInedita() {
-            let vistas = JSON.parse(localStorage.getItem('vistas_clarisse')) || [];
-            let disponiveis = frases.filter(f => !vistas.includes(f));
+            let vistas = JSON.parse(localStorage.getItem('vistas_aleatorias')) || [];
+            let disponiveis = frasesSorteio.filter(f => !vistas.includes(f));
 
+            // Se ela já leu todas as frases extras, limpa a memória para recomeçar o sorteio
             if (disponiveis.length === 0) {
                 vistas = [];
-                disponiveis = [...frases];
+                disponiveis = [...frasesSorteio];
             }
 
             const escolhida = disponiveis[Math.floor(Math.random() * disponiveis.length)];
             vistas.push(escolhida);
-            localStorage.setItem('vistas_clarisse', JSON.stringify(vistas));
+            localStorage.setItem('vistas_aleatorias', JSON.stringify(vistas));
             return escolhida;
         }
 
-        // Garante que o texto inicial não venha bugado
-        fraseExibida.innerText = obterFraseInedita();
-
+        // Função do botão que gera as novas frases com efeito suave
         function proximaFrase() {
             fraseExibida.style.opacity = 0;
             setTimeout(() => {
