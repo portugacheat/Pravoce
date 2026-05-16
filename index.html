@@ -36,68 +36,139 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.28);
+            background: rgba(0, 0, 0, 0.35);
             z-index: 1;
         }
 
-        /* Player Estilo Spotify no Topo */
+        /* NOVO PLAYER PREMIUM ESTILO SPOTIFY */
         .spotify-top-player {
             position: absolute;
             top: 25px;
             z-index: 20;
-            background: rgba(18, 18, 18, 0.45);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            padding: 12px 25px;
-            border-radius: 50px;
+            background: rgba(20, 20, 20, 0.45);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 15px 20px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            width: 90%;
+            max-width: 380px;
             display: flex;
-            align-items: center;
-            gap: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            width: auto;
-            min-width: 320px;
-            justify-content: space-between;
+            flex-direction: column;
+            gap: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
             animation: fadeInTop 1.2s ease-out;
         }
 
-        .player-controls {
+        .player-info-row {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
         }
 
-        .btn-control {
-            background: none;
-            border: none;
+        .music-cover {
+            width: 48px;
+            height: 48px;
+            border-radius: 6px;
+            object-fit: cover;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+            background-color: #222;
+        }
+
+        .music-details {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .music-title {
+            font-size: 0.9rem;
+            font-weight: 600;
             color: #ffffff;
-            font-size: 1.2rem;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-
-        .btn-control:hover {
-            transform: scale(1.15);
-            color: #d4af37;
-        }
-
-        .btn-play {
-            color: #d4af37;
-            font-size: 1.8rem;
-        }
-
-        .track-info-mini {
-            font-size: 0.7rem;
-            color: #d4af37;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-            font-weight: 500;
-            max-width: 150px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
         }
 
-        /* Card Central de Frases */
+        .music-artist {
+            font-size: 0.75rem;
+            color: #b3b3b3;
+            margin-top: 2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .player-controls {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .btn-control {
+            background: none;
+            border: none;
+            color: #b3b3b3;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-control:hover {
+            color: #d4af37;
+            transform: scale(1.1);
+        }
+
+        .btn-play {
+            color: #121212;
+            background: #d4af37;
+            font-size: 1rem;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(212, 175, 55, 0.3);
+        }
+
+        .btn-play:hover {
+            color: #121212;
+            background: #ffffff;
+            transform: scale(1.05);
+        }
+
+        /* PROGRESSO DA MÚSICA */
+        .progress-container {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .progress-bar-wrapper {
+            position: relative;
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 2px;
+            cursor: pointer;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: #d4af37;
+            border-radius: 2px;
+            width: 0%;
+        }
+
+        .time-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.65rem;
+            color: #a7a7a7;
+            font-variant-numeric: tabular-nums;
+        }
+
+        /* Card Central de Frases (Totalmente invisível) */
         .card-frases {
             position: relative;
             z-index: 10;
@@ -105,9 +176,8 @@
             max-width: 440px;
             width: 85%;
             background: transparent;
-            backdrop-filter: blur(5px);
             padding: 20px;
-            border-radius: 20px;
+            margin-top: 60px;
             animation: carregarCard 1.5s ease-out;
         }
 
@@ -194,7 +264,7 @@
 
         .particula {
             position: absolute;
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.15);
             border-radius: 50%;
             pointer-events: none;
             animation: flutuar linear infinite;
@@ -203,7 +273,7 @@
 
         @keyframes flutuar {
             0% { transform: translateY(105vh); opacity: 0; }
-            50% { opacity: 0.8; }
+            50% { opacity: 0.6; }
             100% { transform: translateY(-5vh); opacity: 0; }
         }
     </style>
@@ -213,12 +283,28 @@
     <div class="overlay-escura"></div>
 
     <div class="spotify-top-player">
-        <div class="player-controls">
-            <button class="btn-control" onclick="voltarMusica()">⏮</button>
-            <button class="btn-control btn-play" id="play-icon" onclick="togglePlayer()">▶</button>
-            <button class="btn-control" onclick="proximaMusica()">⏭</button>
+        <div class="player-info-row">
+            <img class="music-cover" id="music-img" src="" alt="Capa Album">
+            <div class="music-details">
+                <div class="music-title" id="music-title">Carregando...</div>
+                <div class="music-artist" id="music-artist">Por favor, aguarde</div>
+            </div>
+            <div class="player-controls">
+                <button class="btn-control" onclick="voltarMusica()">⏮</button>
+                <button class="btn-control btn-play" id="play-icon" onclick="togglePlayer()">▶</button>
+                <button class="btn-control" onclick="proximaMusica()">⏭</button>
+            </div>
         </div>
-        <div class="track-info-mini" id="status-track">Carregando...</div>
+        
+        <div class="progress-container">
+            <div class="progress-bar-wrapper" onclick="seekMusic(event)">
+                <div class="progress-bar-fill" id="progress-fill"></div>
+            </div>
+            <div class="time-info">
+                <span id="time-current">0:00</span>
+                <span id="time-total">0:00</span>
+            </div>
+        </div>
     </div>
 
     <div class="card-frases">
@@ -226,7 +312,7 @@
         <h1>Parabéns.</h1>
         
         <div class="container-texto">
-            <p id="frase-exibida">Cruzamos caminhos há apenas três dias, mas datas especiais merecem ser lembradas. Feliz aniversário Clarisse, você tem uma energia linda.</p>
+            <p id="frase-exibida">Cruzamos caminhos há apenas três dias, mas datas especiais merecem ser lembradas. Feliz aniversário Clarisse, você é especial.</p>
         </div>
 
         <button class="btn-acao" onclick="proximaFrase()">Descobrir nova mensagem</button>
@@ -239,19 +325,24 @@
     <script>
         const audio = document.getElementById('player-audio');
         const playIcon = document.getElementById('play-icon');
-        const statusTrack = document.getElementById('status-track');
+        const musicTitle = document.getElementById('music-title');
+        const musicArtist = document.getElementById('music-artist');
+        const musicImg = document.getElementById('music-img');
+        const progressFill = document.getElementById('progress-fill');
+        const timeCurrent = document.getElementById('time-current');
+        const timeTotal = document.getElementById('time-total');
         const fraseExibida = document.getElementById('frase-exibida');
 
-        // Playlist com caminhos corrigidos
+        // Playlist completa com imagens conceituais estéticas para as capas
         const playlist = [
-            { nome: "Bem - Chapéu de Palha", url: "https://musicaDela.b-cdn.net/Chap%C3%A9u%20de%20Palha%20-%20Bem(M4A_128K).m4a" },
-            { nome: "Star - Colde", url: "https://musicaDela.b-cdn.net/Colde%20(%EC%BD%9C%EB%93%9C)%20-%20Star%20(Lyrics)(M4A_128K).m4a" },
-            { nome: "Buzz Lightyear - Choice x Azzy", url: "https://musicaDela.b-cdn.net/Choice%20_%20Azzy%20-%20Buzz%20Lightyear(M4A_128K).m4a" },
-            { nome: "Paraíso - Ananda", url: "https://musicaDela.b-cdn.net/Ananda%20-%20Para%C3%ADso%20(Official%20Music%20Video)(M4A_128K).m4a" },
-            { nome: "No Escuro - Ana Gabriela ft. Anavitória", url: "https://musicaDela.b-cdn.net/Ana%20Gabriela_%20_anavitoria%20%20-%20No%20Escuro(M4A_128K).m4a" },
-            { nome: "Pés no chão", url: "https://musicaDela.b-cdn.net/P%C3%A9s%20no%20ch%C3%A3o(M4A_128K).m4a" },
-            { nome: "The Abyss - The Weeknd ft. Lana Del Rey", url: "https://musicaDela.b-cdn.net/the%20abyss%20-%20the%20weeknd%20feat.%20lana%20del%20rey%20%5BTRADU%C3%87%C3%83O_LEGENDADO%5D(M4A_128K).m4a" },
-            { nome: "Você", url: "https://musicaDela.b-cdn.net/Voc%C3%AA(M4A_128K).m4a" }
+            { titulo: "Bem", artista: "Chapéu de Palha", capa: "https://images.unsplash.com/photo-1518609878373-06d740f60d8b?w=100&q=80", url: "https://musicaDela.b-cdn.net/Chap%C3%A9u%20de%20Palha%20-%20Bem(M4A_128K).m4a" },
+            { titulo: "Star", artista: "Colde", capa: "https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?w=100&q=80", url: "https://musicaDela.b-cdn.net/Colde%20(%EC%BD%9C%EB%93%9C)%20-%20Star%20(Lyrics)(M4A_128K).m4a" },
+            { titulo: "Buzz Lightyear", artista: "Choice x Azzy", capa: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=100&q=80", url: "https://musicaDela.b-cdn.net/Choice%20_%20Azzy%20-%20Buzz%20Lightyear(M4A_128K).m4a" },
+            { titulo: "Paraíso", artista: "Ananda", capa: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=100&q=80", url: "https://musicaDela.b-cdn.net/Ananda%20-%20Para%C3%ADso%20(Official%20Music%20Video)(M4A_128K).m4a" },
+            { titulo: "No Escuro", artista: "Ana Gabriela ft. Anavitória", capa: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=100&q=80", url: "https://musicaDela.b-cdn.net/Ana%20Gabriela_%20_anavitoria%20%20-%20No%20Escuro(M4A_128K).m4a" },
+            { titulo: "Pés no chão", artista: "Medicina", capa: "https://images.unsplash.com/photo-1483821838886-8924572274c5?w=100&q=80", url: "https://musicaDela.b-cdn.net/P%C3%A9s%20no%20ch%C3%A3o(M4A_128K).m4a" },
+            { titulo: "The Abyss", artista: "The Weeknd ft. Lana Del Rey", capa: "https://images.unsplash.com/photo-1509114397022-ed747cca3f65?w=100&q=80", url: "https://musicaDela.b-cdn.net/the%20abyss%20-%20the%20weeknd%20feat.%20lana%20del%20rey%20%5BTRADU%C3%87%C3%83O_LEGENDADO%5D(M4A_128K).m4a" },
+            { titulo: "Você", artista: "Canção", capa: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=100&q=80", url: "https://musicaDela.b-cdn.net/Voc%C3%AA(M4A_128K).m4a" }
         ];
 
         let indexMusica = 0;
@@ -259,45 +350,68 @@
         function carregarMusica(index) {
             indexMusica = index;
             audio.src = playlist[indexMusica].url;
-            statusTrack.innerText = playlist[indexMusica].nome;
+            musicTitle.innerText = playlist[indexMusica].titulo;
+            musicArtist.innerText = playlist[indexMusica].artista;
+            musicImg.src = playlist[indexMusica].capa;
         }
         
         carregarMusica(0);
 
-        function atualizarInterface() {
-            if (audio.paused) {
-                playIcon.innerText = "▶";
-            } else {
-                playIcon.innerText = "⏸";
-                statusTrack.innerText = playlist[indexMusica].nome;
-            }
+        function formatarTempo(segundos) {
+            if (isNaN(segundos)) return "0:00";
+            const min = Math.floor(segundos / 60);
+            const seg = Math.floor(segundos % 60);
+            return `${min}:${seg < 10 ? '0' : ''}${seg}`;
+        }
+
+        function atualizarProgresso() {
+            const atual = audio.currentTime;
+            const total = audio.duration || 0;
+            const porcentagem = (atual / total) * 100 || 0;
+            
+            progressFill.style.width = `${porcentagem}%`;
+            timeCurrent.innerText = formatarTempo(atual);
+            timeTotal.innerText = formatarTempo(total);
+        }
+
+        function seekMusic(event) {
+            const bar = event.currentTarget;
+            const clickX = event.offsetX;
+            const barWidth = bar.clientWidth;
+            const duration = audio.duration || 0;
+            audio.currentTime = (clickX / barWidth) * duration;
         }
 
         function togglePlayer() {
             if (audio.paused) {
-                audio.play().then(atualizarInterface);
+                audio.play();
+                playIcon.innerText = "⏸";
             } else {
                 audio.pause();
-                atualizarInterface();
+                playIcon.innerText = "▶";
             }
         }
 
         function proximaMusica() {
             indexMusica = (indexMusica + 1) % playlist.length;
             carregarMusica(indexMusica);
-            audio.play().then(atualizarInterface);
+            audio.play();
+            playIcon.innerText = "⏸";
         }
 
         function voltarMusica() {
-            if (audio.currentTime > 3) {
+            if (audio.currentTime > 4) {
                 audio.currentTime = 0;
             } else {
                 indexMusica = (indexMusica - 1 + playlist.length) % playlist.length;
                 carregarMusica(indexMusica);
             }
-            audio.play().then(atualizarInterface);
+            audio.play();
+            playIcon.innerText = "⏸";
         }
 
+        audio.addEventListener('timeupdate', atualizarProgresso);
+        audio.addEventListener('loadedmetadata', atualizarProgresso);
         audio.addEventListener('ended', proximaMusica);
 
         // Banco de dados com as outras 29 frases fofas para rodar no sorteio
@@ -318,7 +432,7 @@
             "Que o universo te devolva em dobro toda a vibe positiva e fofa que você transmite. Feliz novo ciclo!",
             "Três dias conhecendo você e eu já sei que o mundo é um lugar bem mais interessante com o seu brilho. Parabéns, Clarisse!",
             "Espero que a música de hoje embale um dia lindo e cheio de paz para você. Você merece todas as coisas fofas da vida.",
-            "Sua existência merece ser celebrada em grande estilo. Que esse aniversário seja o início de uma fase mágica na sua vida.",
+            "Sua existência merece ser celebrada in grande estilo. Que esse aniversário seja o início de uma fase mágica na sua vida.",
             "Você apareceu há pouco tempo, mas já deixou claro o quanto merece ser cercada de muito amor e mimos hoje. Feliz aniversário!",
             "Que o seu dia seja repleto de sorrisos bobos, mensagens bonitas e aquela sensação gostosa de ser amada. Parabéns, Clarisse.",
             "Não importa há quanto tempo nos conhecemos, mas sim o quão especial é poder te desejar um feliz aniversário hoje. Aproveite muito!",
@@ -333,12 +447,10 @@
             "A vida fica mais bonita quando encontramos pessoas com o coração tão bom quanto o seu. Um feliz e fofo aniversário!"
         ];
 
-        // Rastreia apenas as frases do sorteio que ela já viu
         function obterFraseInedita() {
             let vistas = JSON.parse(localStorage.getItem('vistas_aleatorias')) || [];
             let disponiveis = frasesSorteio.filter(f => !vistas.includes(f));
 
-            // Se ela já leu todas as frases extras, limpa a memória para recomeçar o sorteio
             if (disponiveis.length === 0) {
                 vistas = [];
                 disponiveis = [...frasesSorteio];
@@ -350,7 +462,6 @@
             return escolhida;
         }
 
-        // Função do botão que gera as novas frases com efeito suave
         function proximaFrase() {
             fraseExibida.style.opacity = 0;
             setTimeout(() => {
