@@ -1,43 +1,376 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="pt-BR">
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta name="theme-color" content="#000000">
-	<!--
-      manifest.json provides metadata used when your web app is added to the
-      homescreen on Android. See https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/
-    -->
-	<link rel="manifest" href="%PUBLIC_URL%/manifest.json">
-	<link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
-	<!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-      It will be replaced with the URL of the `public` folder during the build.
-      Only files inside the `public` folder can be referenced from the HTML.
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feliz Aniversário</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running `npm run build`.
-    -->
-	<title>React App</title>
+        body {
+            background-image: url('https://musicaDela.b-cdn.net/images%20(82).jpeg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            filter: grayscale(100%);
+            -webkit-filter: grayscale(100%);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+            color: #ffffff;
+        }
+
+        /* Camada para contraste do texto */
+        .overlay-escura {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.28);
+            z-index: 1;
+        }
+
+        /* Player Estilo Spotify no Topo */
+        .spotify-top-player {
+            position: absolute;
+            top: 25px;
+            z-index: 20;
+            background: rgba(18, 18, 18, 0.45);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            padding: 12px 25px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            width: auto;
+            min-width: 320px;
+            justify-content: space-between;
+            animation: fadeInTop 1.2s ease-out;
+        }
+
+        .player-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .btn-control {
+            background: none;
+            border: none;
+            color: #ffffff;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .btn-control:hover {
+            transform: scale(1.15);
+            color: #d4af37;
+        }
+
+        .btn-play {
+            color: #d4af37;
+            font-size: 1.8rem;
+        }
+
+        .track-info-mini {
+            font-size: 0.7rem;
+            color: #d4af37;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            font-weight: 500;
+            max-width: 150px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* Card Central de Frases */
+        .card-frases {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            max-width: 440px;
+            width: 85%;
+            background: transparent;
+            backdrop-filter: blur(5px);
+            padding: 20px;
+            border-radius: 20px;
+            animation: carregarCard 1.5s ease-out;
+        }
+
+        .tag-data {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3em;
+            color: #d4af37;
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 300;
+            letter-spacing: -0.02em;
+            margin-bottom: 25px;
+            color: #ffffff;
+        }
+
+        .container-texto {
+            min-height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        p {
+            color: #ffffff;
+            font-size: 1rem;
+            line-height: 1.7;
+            font-weight: 400;
+            text-shadow: 2px 2px 15px rgba(0, 0, 0, 0.9);
+            transition: opacity 0.4s ease;
+        }
+
+        /* Botão Moderno */
+        .btn-acao {
+            background: transparent;
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 12px 24px;
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-acao:hover {
+            border-color: #d4af37;
+            color: #d4af37;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        /* Rodapé com o nome dela */
+        .footer-assinatura {
+            position: absolute;
+            bottom: 30px;
+            z-index: 15;
+            font-size: 0.75rem;
+            color: #d4af37;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            text-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5);
+            animation: fadeInBottom 2s ease-in;
+        }
+
+        @keyframes carregarCard {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInTop {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInBottom {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .particula {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: flutuar linear infinite;
+            z-index: 2;
+        }
+
+        @keyframes flutuar {
+            0% { transform: translateY(105vh); opacity: 0; }
+            50% { opacity: 0.8; }
+            100% { transform: translateY(-5vh); opacity: 0; }
+        }
+    </style>
 </head>
-
 <body>
-	<noscript>
-		You need to enable JavaScript to run this app.
-	</noscript>
-	<div id="root"></div>
-	<!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
 
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
+    <div class="overlay-escura"></div>
 
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
+    <div class="spotify-top-player">
+        <div class="player-controls">
+            <button class="btn-control" onclick="voltarMusica()">%E2%8E%AE</button>
+            <button class="btn-control btn-play" id="play-icon" onclick="togglePlayer()">%E2%96%B6</button>
+            <button class="btn-control" onclick="proximaMusica()">%E2%8E%AD</button>
+        </div>
+        <div class="track-info-mini" id="status-track">Carregando...</div>
+    </div>
+
+    <div class="card-frases">
+        <div class="tag-data">Domingo, 17 de Maio</div>
+        <h1>Parab%C3%A9ns.</h1>
+        
+        <div class="container-texto">
+            <p id="frase-exibida">Carregando surpresa...</p>
+        </div>
+
+        <button class="btn-acao" onclick="proximaFrase()">Descobrir nova mensagem</button>
+    </div>
+
+    <div class="footer-assinatura">Pra voc%C3%AA %F0%9F%AB%B5%F0%9F%8F%BC Clarisse</div>
+
+    <audio id="player-audio"></audio>
+
+    <script>
+        const audio = document.getElementById('player-audio');
+        const playIcon = document.getElementById('play-icon');
+        const statusTrack = document.getElementById('status-track');
+        const fraseExibida = document.getElementById('frase-exibida');
+
+        // Playlist completa com as suas 8 músicas organizadas
+        const playlist = [
+            { nome: "Bem - Chap%C3%A9u de Palha", url: "https://musicaDela.b-cdn.net/Chap%C3%A9u%20de%20Palha%20-%20Bem(M4A_128K).m4a" },
+            { nome: "Star - Colde", url: "https://musicaDela.b-cdn.net/Colde%20(%EC%BD%9C%EB%93%9C)%20-%20Star%20(Lyrics)(M4A_128K).m4a" },
+            { nome: "Buzz Lightyear - Choice x Azzy", url: "https://musicaDela.b-cdn.net/Choice%20_%20Azzy%20-%20Buzz%20Lightyear(M4A_128K).m4a" },
+            { nome: "Para%C3%ADso - Ananda", url: "https://musicaDela.b-cdn.net/Ananda%20-%20Para%C3%ADso%20(Official%20Music%20Video)(M4A_128K).m4a" },
+            { nome: "No Escuro - Ana Gabriela ft. Anavit%C3%B3ria", url: "https://musicaDela.b-cdn.net/Ana%20Gabriela_%20_anavitoria%20%20-%20No%20Escuro(M4A_128K).m4a" },
+            { nome: "P%C3%A9s no ch%C3%A3o", url: "https://musicaDela.b-cdn.net/P%C3%A9s%20no%20ch%C3%A3o(M4A_128K).m4a" },
+            { nome: "The Abyss - The Weeknd ft. Lana Del Rey", url: "https://musicaDela.b-cdn.net/the%20abyss%20-%20the%20weeknd%20feat.%20lana%20del%20rey%20%5BTRADU%C3%87%C3%83O_LEGENDADO%5D(M4A_128K).m4a" },
+            { nome: "Voc%C3%AA", url: "https://musicaDela.b-cdn.net/Voc%C3%AA(M4A_128K).m4a" }
+        ];
+
+        let indexMusica = 0;
+
+        // Inicia a primeira música no player de fundo
+        function carregarMusica(index) {
+            indexMusica = index;
+            audio.src = playlist[indexMusica].url;
+            statusTrack.innerText = playlist[indexMusica].nome;
+        }
+        
+        carregarMusica(0);
+
+        function atualizarInterface() {
+            if (audio.paused) {
+                playIcon.innerText = "%E2%96%B6";
+            } else {
+                playIcon.innerText = "%E2%85%A1";
+                statusTrack.innerText = playlist[indexMusica].nome;
+            }
+        }
+
+        function togglePlayer() {
+            if (audio.paused) {
+                audio.play().then(atualizarInterface);
+            } else {
+                audio.pause();
+                atualizarInterface();
+            }
+        }
+
+        function proximaMusica() {
+            indexMusica = (indexMusica + 1) % playlist.length;
+            carregarMusica(indexMusica);
+            audio.play().then(atualizarInterface);
+        }
+
+        function voltarMusica() {
+            if (audio.currentTime > 3) {
+                audio.currentTime = 0;
+            } else {
+                indexMusica = (indexMusica - 1 + playlist.length) % playlist.length;
+                carregarMusica(indexMusica);
+            }
+            audio.play().then(atualizarInterface);
+        }
+
+        // Passa para a próxima música sozinho quando terminar
+        audio.addEventListener('ended', proximaMusica);
+
+        // Banco de dados com exatamente 30 frases fofas e exclusivas para a Clarisse
+        const frases = [
+            "Cruzamos caminhos h%C3%A1 apenas tr%C3%AAs dias, mas datas especiais merecem ser lembradas. Feliz anivers%C3%A1rio Clarisse, voc%C3%AA tem uma energia linda.",
+            "H%C3%A1 quem precise de anos para se fazer notar, e h%C3%A1 voc%C3%AA, que mudou o tom da minha semana em apenas tr%C3%AAs conversas. Parab%C3%A9ns!",
+            "O tempo %C3%A9 s%C3%B3 um detalhe quando a sintonia %C3%A9 verdadeira. Que o dia de hoje seja o in%C3%ADcio de um ano incr%C3%ADvel para voc%C3%AA, Clarisse.",
+            "%C3%80s vezes, as melhores surpresas da vida acontecem sem aviso. Que bom ter conhecido voc%C3%AA a tempo de celebrar o seu dia.",
+            "Que a vida te surpreenda hoje com motivos lindos para sorrir. Parab%C3%A9ns Clarisse, por ser algu%C3%A9m t%C3%A3o singular.",
+            "Anivers%C3%A1rios são recome%C3%A7os. Desejo que o seu novo ciclo seja doce, leve e cheio de instantes que fa%C3%A7am seu cora%C3%A7%C3%A3o vibrar.",
+            "Tr%C3%AAs dias podem parecer pouco no calend%C3%A1rio, mas foram suficientes para perceber o quanto o seu sorriso %C3%A9 contagiante.",
+            "Celebrar voc%C3%AA hoje %C3%A9 lembrar que o mundo guarda encontros incr%C3%ADveis. Que seu dia seja t%C3%A3o genu%C3%ADno e iluminado quanto voc%C3%AA.",
+            "Desejo que o seu novo ano traga hist%C3%B3rias profundas, risos f%C3%A1ceis e toda a felicidade que cabe no seu cora%C3%A7%C3%A3o. Parab%C3%A9ns!",
+            "Para hoje, conex%C3%B5es bonitas, abra%C3%A7os quentinhos e a certeza de que voc%C3%AA %C3%A9 algu%C3%A9m muito especial. Feliz anivers%C3%A1rio.",
+            "Dizem que coisas boas acontecem de repente, e conhecer voc%C3%AA h%C3%A1 tr%C3%AAs dias foi a prova disso. Parab%C3%A9ns pelo seu dia, Clarisse!",
+            "Seu anivers%C3%A1rio chegou logo depois de te conhecer, e isso me deu o pretexto perfeito para te lembrar o quanto voc%C3%AA %C3%A9 cativante.",
+            "Que hoje chova carinho e boas energias sobre voc%C3%AA. Clarisse. Parab%C3%A9ns por ser essa presen%C3%A7a t%C3%A3o leve e bonita.",
+            "Nem todo mundo tem o dom de iluminar um lugar apenas conversando, mas voc%C3%AA faz parecer f%C3%A1cil. Um anivers%C3%A1rio maravilhoso para voc%C3%AA!",
+            "Que o universo te devolva em dobro toda a vibe positiva e fofa que você transmite. Feliz novo ciclo!",
+            "Tr%C3%AAs dias conhecendo voc%C3%AA e eu j%C3%A1 sei que o mundo %C3%A9 um lugar bem mais interessante com o seu brilho. Parab%C3%A9ns, Clarisse!",
+            "Espero que a m%C3%BAsica de hoje embale um dia lindo e cheio de paz para voc%C3%AA. Voc%C3%AA merece todas as coisas fofas da vida.",
+            "Sua exist%C3%AAncia merece ser celebrada em grande estilo. Que esse anivers%C3%A1rio seja o in%C3%ADcio de uma fase m%C3%A1gica na sua vida.",
+            "Voc%C3%AA apareceu h%C3%A1 pouco tempo, mas j%C3%A1 deixou claro o quanto merece ser cercada de muito amor e mimos hoje. Feliz anivers%C3%A1rio!",
+            "Que o seu dia seja repleto de sorrisos bobos, mensagens bonitas e aquela sensa%C3%A7%C3%A3o gostosa de ser amada. Parab%C3%A9ns, Clarisse.",
+            "Não importa h%C3%A1 quanto tempo nos conhecemos, mas sim o quão especial %C3%A9 poder te desejar um feliz anivers%C3%A1rio hoje. Aproveite muito!",
+            "Que o dia de hoje seja t%C3%A3o doce quanto a sua presen%C3%A7a. Parab%C3%A9ns pelo seu anivers%C3%A1rio, Clarisse!",
+            "Desejo que voc%C3%AA nunca perca essa ess%C3%AAncia fofa e esse brilho nos olhos que encantam qualquer um. Um dia lindo para voc%C3%AA.",
+            "Parab%C3%A9ns! Que este novo ano de vida venha recheado de paz, sa%C3%BAde, conquistas e risadas que fiquem salvas na mem%C3%B3ria.",
+            "Existem pessoas que são como m%C3%BAsicas boas: a gente conhece h%C3%A1 pouco tempo, mas j%C3%A1 quer ouvir sempre. Feliz anivers%C3%A1rio, Clarisse!",
+            "Passando para te lembrar que voc%C3%AA %C3%A9 preciosa e que torço muito para que o seu dia seja simplesmente perfeito.",
+            "Que a felicidade não seja apenas um momento hoje, mas o resumo de todo o seu novo ano. Parab%C3%A9ns por ser quem voc%C3%AA %C3%A9.",
+            "Em apenas tr%C3%AAs dias deu para notar que voc%C3%AA merece o mundo inteiro de coisas boas. Um anivers%C3%A1rio incr%C3%ADvel!",
+            "Que a vida seja generosa com os seus sonhos. Parab%C3%A9ns, Clarisse! Que o seu dia transborde alegria.",
+            "A vida fica mais bonita quando encontramos pessoas com o cora%C3%A7%C3%A3o t%C3%A3o bom quanto o seu. Um feliz e fofo anivers%C3%A1rio!"
+        ];
+
+        function obterFraseInedita() {
+            let vistas = JSON.parse(localStorage.getItem('vistas_clarisse')) || [];
+            let disponiveis = frases.filter(f => !vistas.includes(f));
+
+            if (disponiveis.length === 0) {
+                vistas = [];
+                disponiveis = [...frases];
+            }
+
+            const escolhida = disponiveis[Math.floor(Math.random() * disponiveis.length)];
+            vistas.push(escolhida);
+            localStorage.setItem('vistas_clarisse', JSON.stringify(vistas));
+            return escolhida;
+        }
+
+        fraseExibida.innerText = obterFraseInedita();
+
+        function proximaFrase() {
+            fraseExibida.style.opacity = 0;
+            setTimeout(() => {
+                fraseExibida.innerText = obterFraseInedita();
+                fraseExibida.style.opacity = 1;
+            }, 400);
+        }
+
+        function criarParticula() {
+            const p = document.createElement('div');
+            p.className = 'particula';
+            p.style.left = Math.random() * 100 + 'vw';
+            p.style.width = p.style.height = (Math.random() * 3 + 1) + 'px';
+            p.style.animationDuration = (Math.random() * 5 + 5) + 's';
+            document.body.appendChild(p);
+            setTimeout(() => p.remove(), 10000);
+        }
+        setInterval(criarParticula, 800);
+    </script>
 </body>
-
 </html>
