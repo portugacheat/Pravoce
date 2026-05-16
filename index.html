@@ -214,16 +214,16 @@
 
     <div class="spotify-top-player">
         <div class="player-controls">
-            <button class="btn-control" onclick="voltarMusica()">%E2%8E%AE</button>
-            <button class="btn-control btn-play" id="play-icon" onclick="togglePlayer()">%E2%96%B6</button>
-            <button class="btn-control" onclick="proximaMusica()">%E2%8E%AD</button>
+            <button class="btn-control" onclick="voltarMusica()">⏮</button>
+            <button class="btn-control btn-play" id="play-icon" onclick="togglePlayer()">▶</button>
+            <button class="btn-control" onclick="proximaMusica()">⏭</button>
         </div>
         <div class="track-info-mini" id="status-track">Carregando...</div>
     </div>
 
     <div class="card-frases">
         <div class="tag-data">Domingo, 17 de Maio</div>
-        <h1>Parab%C3%A9ns.</h1>
+        <h1>Parabéns.</h1>
         
         <div class="container-texto">
             <p id="frase-exibida">Carregando surpresa...</p>
@@ -232,7 +232,7 @@
         <button class="btn-acao" onclick="proximaFrase()">Descobrir nova mensagem</button>
     </div>
 
-    <div class="footer-assinatura">Pra voc%C3%AA %F0%9F%AB%B5%F0%9F%8F%BC Clarisse</div>
+    <div class="footer-assinatura">Pra você 🫵🏼 Clarisse</div>
 
     <audio id="player-audio"></audio>
 
@@ -242,21 +242,20 @@
         const statusTrack = document.getElementById('status-track');
         const fraseExibida = document.getElementById('frase-exibida');
 
-        // Playlist completa com as suas 8 músicas organizadas
+        // Playlist com caminhos corrigidos
         const playlist = [
-            { nome: "Bem - Chap%C3%A9u de Palha", url: "https://musicaDela.b-cdn.net/Chap%C3%A9u%20de%20Palha%20-%20Bem(M4A_128K).m4a" },
+            { nome: "Bem - Chapéu de Palha", url: "https://musicaDela.b-cdn.net/Chap%C3%A9u%20de%20Palha%20-%20Bem(M4A_128K).m4a" },
             { nome: "Star - Colde", url: "https://musicaDela.b-cdn.net/Colde%20(%EC%BD%9C%EB%93%9C)%20-%20Star%20(Lyrics)(M4A_128K).m4a" },
             { nome: "Buzz Lightyear - Choice x Azzy", url: "https://musicaDela.b-cdn.net/Choice%20_%20Azzy%20-%20Buzz%20Lightyear(M4A_128K).m4a" },
-            { nome: "Para%C3%ADso - Ananda", url: "https://musicaDela.b-cdn.net/Ananda%20-%20Para%C3%ADso%20(Official%20Music%20Video)(M4A_128K).m4a" },
-            { nome: "No Escuro - Ana Gabriela ft. Anavit%C3%B3ria", url: "https://musicaDela.b-cdn.net/Ana%20Gabriela_%20_anavitoria%20%20-%20No%20Escuro(M4A_128K).m4a" },
-            { nome: "P%C3%A9s no ch%C3%A3o", url: "https://musicaDela.b-cdn.net/P%C3%A9s%20no%20ch%C3%A3o(M4A_128K).m4a" },
+            { nome: "Paraíso - Ananda", url: "https://musicaDela.b-cdn.net/Ananda%20-%20Para%C3%ADso%20(Official%20Music%20Video)(M4A_128K).m4a" },
+            { nome: "No Escuro - Ana Gabriela ft. Anavitória", url: "https://musicaDela.b-cdn.net/Ana%20Gabriela_%20_anavitoria%20%20-%20No%20Escuro(M4A_128K).m4a" },
+            { nome: "Pés no chão", url: "https://musicaDela.b-cdn.net/P%C3%A9s%20no%20ch%C3%A3o(M4A_128K).m4a" },
             { nome: "The Abyss - The Weeknd ft. Lana Del Rey", url: "https://musicaDela.b-cdn.net/the%20abyss%20-%20the%20weeknd%20feat.%20lana%20del%20rey%20%5BTRADU%C3%87%C3%83O_LEGENDADO%5D(M4A_128K).m4a" },
-            { nome: "Voc%C3%AA", url: "https://musicaDela.b-cdn.net/Voc%C3%AA(M4A_128K).m4a" }
+            { nome: "Você", url: "https://musicaDela.b-cdn.net/Voc%C3%AA(M4A_128K).m4a" }
         ];
 
         let indexMusica = 0;
 
-        // Inicia a primeira música no player de fundo
         function carregarMusica(index) {
             indexMusica = index;
             audio.src = playlist[indexMusica].url;
@@ -267,9 +266,9 @@
 
         function atualizarInterface() {
             if (audio.paused) {
-                playIcon.innerText = "%E2%96%B6";
+                playIcon.innerText = "▶";
             } else {
-                playIcon.innerText = "%E2%85%A1";
+                playIcon.innerText = "⏸";
                 statusTrack.innerText = playlist[indexMusica].nome;
             }
         }
@@ -299,41 +298,40 @@
             audio.play().then(atualizarInterface);
         }
 
-        // Passa para a próxima música sozinho quando terminar
         audio.addEventListener('ended', proximaMusica);
 
-        // Banco de dados com exatamente 30 frases fofas e exclusivas para a Clarisse
+        // Lista de frases com acentuação perfeitamente limpa
         const frases = [
-            "Cruzamos caminhos h%C3%A1 apenas tr%C3%AAs dias, mas datas especiais merecem ser lembradas. Feliz anivers%C3%A1rio Clarisse, voc%C3%AA tem uma energia linda.",
-            "H%C3%A1 quem precise de anos para se fazer notar, e h%C3%A1 voc%C3%AA, que mudou o tom da minha semana em apenas tr%C3%AAs conversas. Parab%C3%A9ns!",
-            "O tempo %C3%A9 s%C3%B3 um detalhe quando a sintonia %C3%A9 verdadeira. Que o dia de hoje seja o in%C3%ADcio de um ano incr%C3%ADvel para voc%C3%AA, Clarisse.",
-            "%C3%80s vezes, as melhores surpresas da vida acontecem sem aviso. Que bom ter conhecido voc%C3%AA a tempo de celebrar o seu dia.",
-            "Que a vida te surpreenda hoje com motivos lindos para sorrir. Parab%C3%A9ns Clarisse, por ser algu%C3%A9m t%C3%A3o singular.",
-            "Anivers%C3%A1rios são recome%C3%A7os. Desejo que o seu novo ciclo seja doce, leve e cheio de instantes que fa%C3%A7am seu cora%C3%A7%C3%A3o vibrar.",
-            "Tr%C3%AAs dias podem parecer pouco no calend%C3%A1rio, mas foram suficientes para perceber o quanto o seu sorriso %C3%A9 contagiante.",
-            "Celebrar voc%C3%AA hoje %C3%A9 lembrar que o mundo guarda encontros incr%C3%ADveis. Que seu dia seja t%C3%A3o genu%C3%ADno e iluminado quanto voc%C3%AA.",
-            "Desejo que o seu novo ano traga hist%C3%B3rias profundas, risos f%C3%A1ceis e toda a felicidade que cabe no seu cora%C3%A7%C3%A3o. Parab%C3%A9ns!",
-            "Para hoje, conex%C3%B5es bonitas, abra%C3%A7os quentinhos e a certeza de que voc%C3%AA %C3%A9 algu%C3%A9m muito especial. Feliz anivers%C3%A1rio.",
-            "Dizem que coisas boas acontecem de repente, e conhecer voc%C3%AA h%C3%A1 tr%C3%AAs dias foi a prova disso. Parab%C3%A9ns pelo seu dia, Clarisse!",
-            "Seu anivers%C3%A1rio chegou logo depois de te conhecer, e isso me deu o pretexto perfeito para te lembrar o quanto voc%C3%AA %C3%A9 cativante.",
-            "Que hoje chova carinho e boas energias sobre voc%C3%AA. Clarisse. Parab%C3%A9ns por ser essa presen%C3%A7a t%C3%A3o leve e bonita.",
-            "Nem todo mundo tem o dom de iluminar um lugar apenas conversando, mas voc%C3%AA faz parecer f%C3%A1cil. Um anivers%C3%A1rio maravilhoso para voc%C3%AA!",
+            "Cruzamos caminhos há apenas três dias, mas datas especiais merecem ser lembradas. Feliz aniversário Clarisse, você tem uma energia linda.",
+            "Há quem precise de anos para se fazer notar, e há você, que mudou o tom da minha semana em apenas três conversas. Parabéns!",
+            "O tempo é só um detalhe quando a sintonia é verdadeira. Que o dia de hoje seja o início de um ano incrível para você, Clarisse.",
+            "Às vezes, os melhores encontros da vida acontecem sem aviso. Que bom ter conhecido você a tempo de celebrar o seu dia.",
+            "Que a vida te surpreenda hoje com motivos lindos para sorrir. Parabéns Clarisse, por ser alguém tão singular.",
+            "Aniversários são recomeços. Desejo que o seu novo ciclo seja doce, leve e cheio de instantes que façam seu coração vibrar.",
+            "Três dias podem parecer pouco no calendário, mas foram suficientes para perceber o quanto o seu sorriso é contagiante.",
+            "Celebrar você hoje é lembrar que o mundo guarda encontros incríveis. Que seu dia seja tão genuíno e iluminado quanto você.",
+            "Desejo que o seu novo ano traga histórias profundas, risos fáceis e toda a felicidade que cabe no seu coração. Parabéns!",
+            "Para hoje, conexões bonitas, abraços quentinhos e a certeza de que você é alguém muito especial. Feliz aniversário.",
+            "Dizem que coisas boas acontecem de repente, e conhecer você há três dias foi a prova disso. Parabéns pelo seu dia, Clarisse!",
+            "Seu aniversário chegou logo depois de te conhecer, e isso me deu o pretexto perfeito para te lembrar o quanto você é cativante.",
+            "Que hoje chova carinho e boas energias sobre você, Clarisse. Parabéns por ser essa presença tão leve e bonita.",
+            "Nem todo mundo tem o dom de iluminar um lugar apenas conversando, mas você faz parecer fácil. Um aniversário maravilhoso para você!",
             "Que o universo te devolva em dobro toda a vibe positiva e fofa que você transmite. Feliz novo ciclo!",
-            "Tr%C3%AAs dias conhecendo voc%C3%AA e eu j%C3%A1 sei que o mundo %C3%A9 um lugar bem mais interessante com o seu brilho. Parab%C3%A9ns, Clarisse!",
-            "Espero que a m%C3%BAsica de hoje embale um dia lindo e cheio de paz para voc%C3%AA. Voc%C3%AA merece todas as coisas fofas da vida.",
-            "Sua exist%C3%AAncia merece ser celebrada em grande estilo. Que esse anivers%C3%A1rio seja o in%C3%ADcio de uma fase m%C3%A1gica na sua vida.",
-            "Voc%C3%AA apareceu h%C3%A1 pouco tempo, mas j%C3%A1 deixou claro o quanto merece ser cercada de muito amor e mimos hoje. Feliz anivers%C3%A1rio!",
-            "Que o seu dia seja repleto de sorrisos bobos, mensagens bonitas e aquela sensa%C3%A7%C3%A3o gostosa de ser amada. Parab%C3%A9ns, Clarisse.",
-            "Não importa h%C3%A1 quanto tempo nos conhecemos, mas sim o quão especial %C3%A9 poder te desejar um feliz anivers%C3%A1rio hoje. Aproveite muito!",
-            "Que o dia de hoje seja t%C3%A3o doce quanto a sua presen%C3%A7a. Parab%C3%A9ns pelo seu anivers%C3%A1rio, Clarisse!",
-            "Desejo que voc%C3%AA nunca perca essa ess%C3%AAncia fofa e esse brilho nos olhos que encantam qualquer um. Um dia lindo para voc%C3%AA.",
-            "Parab%C3%A9ns! Que este novo ano de vida venha recheado de paz, sa%C3%BAde, conquistas e risadas que fiquem salvas na mem%C3%B3ria.",
-            "Existem pessoas que são como m%C3%BAsicas boas: a gente conhece h%C3%A1 pouco tempo, mas j%C3%A1 quer ouvir sempre. Feliz anivers%C3%A1rio, Clarisse!",
-            "Passando para te lembrar que voc%C3%AA %C3%A9 preciosa e que torço muito para que o seu dia seja simplesmente perfeito.",
-            "Que a felicidade não seja apenas um momento hoje, mas o resumo de todo o seu novo ano. Parab%C3%A9ns por ser quem voc%C3%AA %C3%A9.",
-            "Em apenas tr%C3%AAs dias deu para notar que voc%C3%AA merece o mundo inteiro de coisas boas. Um anivers%C3%A1rio incr%C3%ADvel!",
-            "Que a vida seja generosa com os seus sonhos. Parab%C3%A9ns, Clarisse! Que o seu dia transborde alegria.",
-            "A vida fica mais bonita quando encontramos pessoas com o cora%C3%A7%C3%A3o t%C3%A3o bom quanto o seu. Um feliz e fofo anivers%C3%A1rio!"
+            "Três dias conhecendo você e eu já sei que o mundo é um lugar bem mais interessante com o seu brilho. Parabéns, Clarisse!",
+            "Espero que a música de hoje embale um dia lindo e cheio de paz para você. Você merece todas as coisas fofas da vida.",
+            "Sua existência merece ser celebrada em grande estilo. Que esse aniversário seja o início de uma fase mágica na sua vida.",
+            "Você apareceu há pouco tempo, mas já deixou claro o quanto merece ser cercada de muito amor e mimos hoje. Feliz aniversário!",
+            "Que o seu dia seja repleto de sorrisos bobos, mensagens bonitas e aquela sensação gostosa de ser amada. Parabéns, Clarisse.",
+            "Não importa há quanto tempo nos conhecemos, mas sim o quão especial é poder te desejar um feliz aniversário hoje. Aproveite muito!",
+            "Que o dia de hoje seja tão doce quanto a sua presença. Parabéns pelo seu aniversário, Clarisse!",
+            "Desejo que você nunca perca essa essência fofa e esse brilho nos olhos que encantam qualquer um. Um dia lindo para você.",
+            "Parabéns! Que este novo ano de vida venha recheado de paz, saúde, conquistas e risadas que fiquem salvas na memória.",
+            "Existem pessoas que são como músicas boas: a gente conhece há pouco tempo, mas já quer ouvir sempre. Feliz aniversário, Clarisse!",
+            "Passando para te lembrar que você é preciosa e que torço muito para que o seu dia seja simplesmente perfeito.",
+            "Que a felicidade não seja apenas um momento hoje, mas o resumo de todo o seu novo ano. Parabéns por ser quem você é.",
+            "Em apenas três dias deu para notar que você merece o mundo inteiro de coisas boas. Um aniversário incrível!",
+            "Que a vida seja generosa com os seus sonhos. Parabéns, Clarisse! Que o seu dia transborde alegria.",
+            "A vida fica mais bonita quando encontramos pessoas com o coração tão bom quanto o seu. Um feliz e fofo aniversário!"
         ];
 
         function obterFraseInedita() {
@@ -351,6 +349,7 @@
             return escolhida;
         }
 
+        // Garante que o texto inicial não venha bugado
         fraseExibida.innerText = obterFraseInedita();
 
         function proximaFrase() {
